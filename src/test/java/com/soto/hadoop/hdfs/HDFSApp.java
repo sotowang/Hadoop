@@ -53,6 +53,20 @@ public class HDFSApp {
         IOUtils.copyBytes(in, System.out, 1024);
     }
 
+    /**
+     * 重命名
+     *
+     * @throws Exception
+     */
+    @Test
+    public void rename() throws Exception {
+        Path oldPath = new Path("/hdfsapi/test/a.txt");
+
+        Path newPath = new Path("/hdfsapi/test/b.txt");
+        fileSystem.rename(oldPath, newPath);
+
+    }
+
 
 
 
