@@ -1,9 +1,11 @@
 package com.soto.hadoop.hdfs;
 
 import org.apache.hadoop.conf.Configuration;
+import org.apache.hadoop.fs.FSDataInputStream;
 import org.apache.hadoop.fs.FSDataOutputStream;
 import org.apache.hadoop.fs.FileSystem;
 import org.apache.hadoop.fs.Path;
+import org.apache.hadoop.io.IOUtils;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -39,6 +41,16 @@ public class HDFSApp {
         output.write("hello hadoop".getBytes());
         output.flush();
         output.close();
+    }
+
+    /**
+     * 查看HDFS文件上的内容
+     * @throws Exception
+     */
+    @Test
+    public void cat() throws Exception {
+        FSDataInputStream in = fileSystem.open(new Path("/hdfsapi/test/a.txt"));
+        IOUtils.copyBytes(in, System.out, 1024);
     }
 
 
