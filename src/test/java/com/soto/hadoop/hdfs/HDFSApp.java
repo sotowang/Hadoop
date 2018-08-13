@@ -6,10 +6,15 @@ import org.apache.hadoop.fs.FSDataOutputStream;
 import org.apache.hadoop.fs.FileSystem;
 import org.apache.hadoop.fs.Path;
 import org.apache.hadoop.io.IOUtils;
+import org.apache.hadoop.util.Progressable;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.io.BufferedInputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.InputStream;
 import java.net.URI;
 
 /**
@@ -21,6 +26,23 @@ public class HDFSApp {
 
     FileSystem fileSystem = null;
     Configuration configuration = null;
+
+    @Before
+    public void setUp() throws Exception {
+        System.out.println("HDFSApp.setUp");
+
+        configuration = new Configuration();
+        fileSystem = FileSystem.get(new URI(HDFS_PATH), configuration);
+    }
+
+
+    @After
+    public void tearDown() throws Exception {
+        configuration = null;
+        fileSystem = null;
+        System.out.println("HDFSApp.tearDown");
+
+    }
 
     /**
      * 创建HDFS目录
@@ -78,25 +100,30 @@ public class HDFSApp {
         fileSystem.copyFromLocalFile(localPath, hdfsPath);
 
     }
+    /**
+     * 上传文件到HDFS
+     * @throws Exception
+     */
+    @Test
+    public void copyFromLocalFileWithProgress() throws Exception {
+        InputStream in = new BufferedInputStream(
+                new FileInputStream(
+                        new File("/home/sotowang/第9章_前沿技术拓展Spark,Flink,Beam.mp4")
+                ));
+        FSDataOutputStream output = fileSystem.create(new Path("/hdfsapi/test/第9章.mp4"),
+                new Progressable() {
+                    public void progress() {
+                        System.out.println("#");
+                    }
+                });
+        IOUtils.copyBytes(in,output,4096);
 
 
-
-    @Before
-    public void setUp() throws Exception {
-        System.out.println("HDFSApp.setUp");
-
-        configuration = new Configuration();
-        fileSystem = FileSystem.get(new URI(HDFS_PATH), configuration);
     }
 
 
-    @After
-    public void tearDown() throws Exception {
-        configuration = null;
-        fileSystem = null;
-        System.out.println("HDFSApp.tearDown");
 
-    }
+
 
 
 }
