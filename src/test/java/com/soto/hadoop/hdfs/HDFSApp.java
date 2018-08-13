@@ -94,7 +94,7 @@ public class HDFSApp {
     @Test
     public void copyFromLocalFile() throws Exception {
         Path localPath = new Path("/home/sotowang/user/aur/hadoop/data/hello.txt");
-        Path hdfsPath = new Path("/hdfsapi/test/");
+        Path hdfsPath = new Path("/");
         fileSystem.copyFromLocalFile(localPath, hdfsPath);
 
     }
@@ -152,7 +152,7 @@ public class HDFSApp {
      */
     @Test
     public void delete() throws Exception {
-        fileSystem.delete(new Path("/hdfsapi/test/"),true);
+        fileSystem.delete(new Path("/out"),true);
     }
 
 
