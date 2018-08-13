@@ -1,10 +1,7 @@
 package com.soto.hadoop.hdfs;
 
 import org.apache.hadoop.conf.Configuration;
-import org.apache.hadoop.fs.FSDataInputStream;
-import org.apache.hadoop.fs.FSDataOutputStream;
-import org.apache.hadoop.fs.FileSystem;
-import org.apache.hadoop.fs.Path;
+import org.apache.hadoop.fs.*;
 import org.apache.hadoop.io.IOUtils;
 import org.apache.hadoop.util.Progressable;
 import org.junit.After;
@@ -131,6 +128,25 @@ public class HDFSApp {
         Path localPath = new Path("/home/sotowang/h.txt");
         Path hdfsPath = new Path("/hdfsapi/test/hello.txt");
         fileSystem.copyToLocalFile(hdfsPath, localPath);
+    }
+
+    /**
+     * 查看某个目录下的所有文件
+     */
+    @Test
+    public void listFiles() throws Exception {
+        FileStatus[] fileStatuses = fileSystem.listStatus(new Path("/"));
+        for (FileStatus fileStatus : fileStatuses) {
+            String isDir = fileStatus.isDirectory() ? "文件夹" : "文件";
+            short replication = fileStatus.getReplication();
+            long len = fileStatus.getLen();
+            String path = fileStatus.getPath().toString();
+
+
+            System.out.println(isDir + "\t" + replication + "\t" + len + "\t" + path);
+        }
 
     }
+
+
 }
