@@ -11,10 +11,7 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import java.io.BufferedInputStream;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.InputStream;
+import java.io.*;
 import java.net.URI;
 
 /**
@@ -46,6 +43,7 @@ public class HDFSApp {
 
     /**
      * 创建HDFS目录
+     *
      * @throws Exception
      */
     @Test
@@ -55,6 +53,7 @@ public class HDFSApp {
 
     /**
      * 创建文件
+     *
      * @throws Exception
      */
     @Test
@@ -67,6 +66,7 @@ public class HDFSApp {
 
     /**
      * 查看HDFS文件上的内容
+     *
      * @throws Exception
      */
     @Test
@@ -91,6 +91,7 @@ public class HDFSApp {
 
     /**
      * 上传文件到HDFS
+     *
      * @throws Exception
      */
     @Test
@@ -100,8 +101,10 @@ public class HDFSApp {
         fileSystem.copyFromLocalFile(localPath, hdfsPath);
 
     }
+
     /**
      * 上传文件到HDFS
+     *
      * @throws Exception
      */
     @Test
@@ -116,14 +119,18 @@ public class HDFSApp {
                         System.out.println("#");
                     }
                 });
-        IOUtils.copyBytes(in,output,4096);
-
-
+        IOUtils.copyBytes(in, output, 4096);
     }
 
+    /**
+     * 下载HDFS文件
+     * @throws IOException
+     */
+    @Test
+    public void copyToLocalFile() throws IOException {
+        Path localPath = new Path("/home/sotowang/h.txt");
+        Path hdfsPath = new Path("/hdfsapi/test/hello.txt");
+        fileSystem.copyToLocalFile(hdfsPath, localPath);
 
-
-
-
-
+    }
 }
