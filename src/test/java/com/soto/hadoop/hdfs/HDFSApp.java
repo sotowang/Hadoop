@@ -49,7 +49,7 @@ public class HDFSApp {
      */
     @Test
     public void cat() throws Exception {
-        FSDataInputStream in = fileSystem.open(new Path("/hdfsapi/test/a.txt"));
+        FSDataInputStream in = fileSystem.open(new Path("/hdfsapi/test/b.txt"));
         IOUtils.copyBytes(in, System.out, 1024);
     }
 
@@ -64,9 +64,20 @@ public class HDFSApp {
 
         Path newPath = new Path("/hdfsapi/test/b.txt");
         fileSystem.rename(oldPath, newPath);
-
     }
 
+
+    /**
+     * 上传文件到HDFS
+     * @throws Exception
+     */
+    @Test
+    public void copyFromLocalFile() throws Exception {
+        Path localPath = new Path("/home/sotowang/user/aur/hadoop/data/hello.txt");
+        Path hdfsPath = new Path("/hdfsapi/test/");
+        fileSystem.copyFromLocalFile(localPath, hdfsPath);
+
+    }
 
 
 
@@ -75,7 +86,7 @@ public class HDFSApp {
         System.out.println("HDFSApp.setUp");
 
         configuration = new Configuration();
-        fileSystem = FileSystem.get(new URI(HDFS_PATH), configuration,"sotowang");
+        fileSystem = FileSystem.get(new URI(HDFS_PATH), configuration);
     }
 
 
