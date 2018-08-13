@@ -145,7 +145,14 @@ public class HDFSApp {
 
             System.out.println(isDir + "\t" + replication + "\t" + len + "\t" + path);
         }
+    }
 
+    /**
+     * 删除文件
+     */
+    @Test
+    public void delete() throws Exception {
+        fileSystem.delete(new Path("/hdfsapi/test/"),true);
     }
 
 
