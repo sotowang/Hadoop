@@ -81,6 +81,14 @@
       <version>2.6.0</version>
     </dependency>
 
+    <!--添加userAgent解析依赖-->
+    <dependency>
+      <groupId>com.kumkee</groupId>
+      <artifactId>UserAgentParser</artifactId>
+      <version>0.0.1</version>
+    </dependency>
+
+
 
 
 
