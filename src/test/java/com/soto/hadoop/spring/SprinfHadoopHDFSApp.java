@@ -40,7 +40,6 @@ public class SprinfHadoopHDFSApp {
         FSDataInputStream in = fileSystem.open(new Path("/springhdfs/hadoop分布式集群搭建"));
         IOUtils.copyBytes(in, System.out, 1024);
         in.close();
-
     }
 
 
